@@ -234,6 +234,9 @@ async def crear_usuario(
         nuevo_usuario["unidades_individuales"] = unidades_individuales
         if usuario.cdi:
             nuevo_usuario["cdi"] = usuario.cdi.lower()
+        
+        if usuario.minimo_compra is not None:
+            nuevo_usuario["minimo_compra"] = usuario.minimo_compra
 
     if rol_normalizado == "bodega":
         nuevo_usuario["cdi"] = usuario.cdi.lower()
@@ -265,7 +268,8 @@ async def crear_usuario(
         fecha_ultimo_acceso=nuevo_usuario["fecha_ultimo_acceso"],
         admin_id=str(creador["_id"]),
         phone=usuario.phone,
-        tipo_precio=usuario.tipo_precio if rol_normalizado in ["distribuidor_nacional", "distribuidor_internacional"] else None
+        tipo_precio=usuario.tipo_precio if rol_normalizado in ["distribuidor_nacional", "distribuidor_internacional"] else None,
+        minimo_compra=usuario.minimo_compra
     )
 
 

@@ -21,6 +21,12 @@ class UserCreate(UserBase):
     unidades_individuales: Optional[bool] = Field(
         False, description="Indica si el distribuidor maneja unidades individuales (solo distribuidores)"
     )
+    minimo_compra: Optional[float] = Field(        # ← NUEVO
+        None,
+        description="Monto mínimo de compra en COP. Solo para distribuidores.",
+        ge=0  # ge=0 significa "greater than or equal to 0", valida que no sea negativo
+    )
+
 
 # MODELO DE RESPUESTA PARA USUARIOS
 class UserResponse(BaseModel):
@@ -34,6 +40,7 @@ class UserResponse(BaseModel):
     admin_id: str | None = None  # Puede ser opcional
     tipo_precio: str | None = None  # Solo para distribuidores
     unidades_individuales: bool | None = None  # Solo para distribuidores
+    minimo_compra: float | None = None             # ← NUEVO
 
 
 class AdminCreate(BaseModel):
@@ -56,5 +63,6 @@ class UserUpdate(BaseModel):
     estado: Optional[str] = None
     tipo_precio: Optional[str] = None
     contrasena: Optional[str] = None
+    minimo_compra: Optional[float] = Field(None, ge=0)  # ← NUEVO
 
 
